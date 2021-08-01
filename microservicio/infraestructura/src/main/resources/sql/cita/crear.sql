@@ -1,0 +1,1 @@
+insert into cita (nombre, id_persona,tipo_servicio, costo_servicio, fecha_cita) values (:nombre, :idPersona, :tipoServicio, :costoServicio, :fechaCita)
