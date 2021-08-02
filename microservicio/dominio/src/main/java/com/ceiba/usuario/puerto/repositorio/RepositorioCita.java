@@ -28,5 +28,5 @@ public interface RepositorioCita {
      * @param nombre
      * @return si existe o no
      */
-    boolean existe(String nombre);
+    boolean existe(Long idPersona);
 }

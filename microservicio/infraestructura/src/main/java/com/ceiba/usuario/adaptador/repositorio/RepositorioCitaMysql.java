@@ -48,9 +48,9 @@ public class RepositorioCitaMysql implements RepositorioCita {
 	}
 
 	@Override
-	public boolean existe(String nombre) {
+	public boolean existe(Long idPersona) {
 		MapSqlParameterSource paramSource = new MapSqlParameterSource();
-        paramSource.addValue("nombre", nombre);
+        paramSource.addValue("idPersona", idPersona);
 
         return this.customNamedParameterJdbcTemplate.getNamedParameterJdbcTemplate().queryForObject(sqlExiste,paramSource, Boolean.class);
 	}

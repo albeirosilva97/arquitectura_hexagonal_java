@@ -1,1 +1,1 @@
-select count(1) from cita where nombre = :nombre
+select count(1) from cita where id_persona = :idPersona
