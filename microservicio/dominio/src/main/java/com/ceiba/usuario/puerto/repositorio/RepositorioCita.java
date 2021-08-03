@@ -24,7 +24,7 @@ public interface RepositorioCita {
     void eliminar(Long id);
 
     /**
-     * Permite validar si existe una cita con un nombre de persona
+     * Permite validar si existe una cita con un id de persona
      * @param nombre
      * @return si existe o no
      */

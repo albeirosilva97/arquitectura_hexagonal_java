@@ -1,5 +1,6 @@
 package com.ceiba.usuario.servicio;
 
+import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.util.Calendar;
@@ -7,6 +8,8 @@ import java.util.GregorianCalendar;
 import java.util.List;
 
 import com.ceiba.dominio.excepcion.ExcepcionCitaDiaNoHabil;
+import com.ceiba.dominio.excepcion.ExcepcionFechaCitaMenorFechaActual;
+import com.ceiba.dominio.excepcion.ExcepcionPersonaConDosCitas;
 import com.ceiba.usuario.modelo.dto.DtoCita;
 import com.ceiba.usuario.modelo.entidad.Cita;
 import com.ceiba.usuario.puerto.dao.DaoCita;
@@ -15,7 +18,8 @@ import com.ceiba.usuario.puerto.repositorio.RepositorioCita;
 public class ServicioCrearCita {
 
 	private static final String LA_PERSONA_YA_TIENE_CITA_EN_LA_SEMANA = "La persona ya tene una cita en la semana";
-	private static final String DIA_NO_HABIL_PARA_SERVICIO = "Día no hábil para este servicio";
+	private static final String DIA_NO_HABIL_PARA_SERVICIO = "Dia no habil para este servicio";
+	private static final String FECHA_CITA_MENOR_A_FECHA_ACTUAL = "La fecha de la cita es menor a la fecha actual";
 	private static final Integer COSTO_SERVICIO_1 = 5000;
 	private static final Integer COSTO_SERVICIO_2 = 6000;
 	private static final Integer COSTO_SERVICIO_3 = 10000;
@@ -31,6 +35,7 @@ public class ServicioCrearCita {
 	}
 
 	public Long ejecutar(Cita cita) {
+		validarFechaCitaMayorAfechaDelSistema(cita);
 		fijarCosto(cita);
 		validarDiaDeCita(cita);
 		validarExistenciaPrevia(cita);
@@ -41,17 +46,14 @@ public class ServicioCrearCita {
 		List<DtoCita> citas = this.daoCita.buscarCitaPorIdPersona(cita.getIdPersona());
 		Calendar fechaCitaNueva = GregorianCalendar.from(ZonedDateTime.of(cita.getFechaCita(), ZoneId.systemDefault()));
 		if (!citas.isEmpty()) {
-			for (DtoCita citaEncontrada : citas) {
-				Calendar fechaCita = GregorianCalendar
-						.from(ZonedDateTime.of(citaEncontrada.getFechaCita(), ZoneId.systemDefault()));
+			citas.stream().forEach((p) -> {
+				Calendar fechaCita = GregorianCalendar.from(ZonedDateTime.of(p.getFechaCita(), ZoneId.systemDefault()));
 				if (fechaCitaNueva.get(Calendar.YEAR) == fechaCita.get(Calendar.YEAR)
 						&& fechaCitaNueva.get(Calendar.WEEK_OF_YEAR) == fechaCita.get(Calendar.WEEK_OF_YEAR)) {
-					throw new ExcepcionCitaDiaNoHabil(DIA_NO_HABIL_PARA_SERVICIO);
+					throw new ExcepcionPersonaConDosCitas(LA_PERSONA_YA_TIENE_CITA_EN_LA_SEMANA);
 				}
-
-			}
+			});
 		}
-
 	}
 
 	private void fijarCosto(Cita cita) {
@@ -93,6 +95,12 @@ public class ServicioCrearCita {
 				? EXECENTE_FINES_DE_SEMANA
 				: 0;
 	}
+
+	private void validarFechaCitaMayorAfechaDelSistema(Cita cita) {
+		if (cita.getFechaCita().isBefore(LocalDateTime.now())) {
+			throw new ExcepcionFechaCitaMenorFechaActual(FECHA_CITA_MENOR_A_FECHA_ACTUAL);
+		}
+	}
 	private int contarDiasHabilesEntreDosFechas(Cita cita) {
 		int diffDays= 0;
 		Calendar fechaInicial = Calendar.getInstance();
@@ -102,10 +110,10 @@ public class ServicioCrearCita {
 
 		  //si el dia de la semana de la fecha minima es diferente de sabado o domingo
 		  if (fechaInicial.get(Calendar.DAY_OF_WEEK) != 1 && fechaInicial.get(Calendar.DAY_OF_WEEK) != 7) {
-		   //se aumentan los días de diferencia entre min y max
+		   //se aumentan los dï¿½as de diferencia entre min y max
 		   diffDays++;
 		   }
-		  //se suma 1 dia para hacer la validación del siguiente dia.
+		  //se suma 1 dia para hacer la validaciï¿½n del siguiente dia.
 		  fechaInicial.add(Calendar.DATE, 1);
 		  }
 		return diffDays+1;

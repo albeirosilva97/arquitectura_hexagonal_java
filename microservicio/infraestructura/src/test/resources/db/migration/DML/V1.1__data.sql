@@ -1,1 +1,2 @@
-insert into usuario(nombre,clave,fecha_creacion) values('test','1234',now())
+insert into usuario(nombre,clave,fecha_creacion) values('test','1234',now());
+insert into cita(nombre,id_persona,tipo_servicio,costo_servicio,fecha_cita) values('albeiro',1111,2,2000,'2021-09-02 07:10:09');
