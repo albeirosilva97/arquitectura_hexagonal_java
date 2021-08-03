@@ -13,8 +13,8 @@ public interface DaoCita {
     List<DtoCita> listar();
 
     /**
-     * Permite buscar una cita por idPersona
-     * @return cita
+     * Permite buscar una citas por idPersona
+     * @return List<DtoCita>
      */
     List<DtoCita> buscarCitaPorIdPersona(Long idPersona);
 }

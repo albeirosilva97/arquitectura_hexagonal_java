@@ -8,7 +8,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.ceiba.cita.consulta.ManejadorListarCitas;
 import com.ceiba.cita.modelo.dto.DtoCita;
-import com.ceiba.usuario.modelo.dto.DtoUsuario;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
