@@ -83,6 +83,9 @@ dependencies {
 	implementation project(':infraestructura')
 }
 
+test {
+	useJUnitPlatform()
+
 bootJar {
 	mainClassName = 'com.ceiba.Application'
     baseName = 'citas'
