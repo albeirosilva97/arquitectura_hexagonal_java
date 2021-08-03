@@ -1,8 +1,8 @@
-package com.ceiba.usuario.puerto.dao;
+package com.ceiba.cita.puerto.dao;
 
 import java.util.List;
 
-import com.ceiba.usuario.modelo.dto.DtoCita;
+import com.ceiba.cita.modelo.dto.DtoCita;
 
 public interface DaoCita {
 

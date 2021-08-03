@@ -1,4 +1,4 @@
-package com.ceiba.usuario.servicio;
+package com.ceiba.cita.servicio;
 
 import java.time.LocalDateTime;
 import java.time.ZoneId;
@@ -7,13 +7,13 @@ import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.List;
 
+import com.ceiba.cita.modelo.dto.DtoCita;
+import com.ceiba.cita.modelo.entidad.Cita;
+import com.ceiba.cita.puerto.dao.DaoCita;
+import com.ceiba.cita.puerto.repositorio.RepositorioCita;
 import com.ceiba.dominio.excepcion.ExcepcionCitaDiaNoHabil;
 import com.ceiba.dominio.excepcion.ExcepcionFechaCitaMenorFechaActual;
 import com.ceiba.dominio.excepcion.ExcepcionPersonaConDosCitas;
-import com.ceiba.usuario.modelo.dto.DtoCita;
-import com.ceiba.usuario.modelo.entidad.Cita;
-import com.ceiba.usuario.puerto.dao.DaoCita;
-import com.ceiba.usuario.puerto.repositorio.RepositorioCita;
 
 public class ServicioCrearCita {
 

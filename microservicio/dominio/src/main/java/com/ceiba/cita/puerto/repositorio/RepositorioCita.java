@@ -1,6 +1,6 @@
-package com.ceiba.usuario.puerto.repositorio;
+package com.ceiba.cita.puerto.repositorio;
 
-import com.ceiba.usuario.modelo.entidad.Cita;
+import com.ceiba.cita.modelo.entidad.Cita;
 
 public interface RepositorioCita {
 

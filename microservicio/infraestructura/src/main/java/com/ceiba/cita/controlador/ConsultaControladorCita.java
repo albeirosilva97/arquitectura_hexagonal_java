@@ -1,4 +1,4 @@
-package com.ceiba.usuario.controlador;
+package com.ceiba.cita.controlador;
 
 import java.util.List;
 
@@ -6,8 +6,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.ceiba.usuario.consulta.ManejadorListarCitas;
-import com.ceiba.usuario.modelo.dto.DtoCita;
+import com.ceiba.cita.consulta.ManejadorListarCitas;
+import com.ceiba.cita.modelo.dto.DtoCita;
 import com.ceiba.usuario.modelo.dto.DtoUsuario;
 
 import io.swagger.annotations.Api;

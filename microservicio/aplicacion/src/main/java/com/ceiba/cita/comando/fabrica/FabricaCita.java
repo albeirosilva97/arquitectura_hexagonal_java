@@ -1,9 +1,9 @@
-package com.ceiba.usuario.comando.fabrica;
+package com.ceiba.cita.comando.fabrica;
 
 import org.springframework.stereotype.Component;
 
-import com.ceiba.usuario.comando.ComandoCita;
-import com.ceiba.usuario.modelo.entidad.Cita;
+import com.ceiba.cita.comando.ComandoCita;
+import com.ceiba.cita.modelo.entidad.Cita;
 
 @Component
 public class FabricaCita {

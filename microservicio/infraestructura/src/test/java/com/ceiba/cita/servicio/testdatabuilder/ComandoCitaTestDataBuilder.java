@@ -3,8 +3,8 @@ package com.ceiba.cita.servicio.testdatabuilder;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
-import com.ceiba.usuario.comando.ComandoCita;
-import com.ceiba.usuario.modelo.entidad.Cita;
+import com.ceiba.cita.comando.ComandoCita;
+import com.ceiba.cita.modelo.entidad.Cita;
 
 
 public class ComandoCitaTestDataBuilder {

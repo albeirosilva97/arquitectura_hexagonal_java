@@ -3,10 +3,10 @@ package com.ceiba.configuracion;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-import com.ceiba.usuario.puerto.dao.DaoCita;
-import com.ceiba.usuario.puerto.repositorio.RepositorioCita;
-import com.ceiba.usuario.servicio.ServicioCrearCita;
-import com.ceiba.usuario.servicio.ServicioEliminarCita;
+import com.ceiba.cita.puerto.dao.DaoCita;
+import com.ceiba.cita.puerto.repositorio.RepositorioCita;
+import com.ceiba.cita.servicio.ServicioCrearCita;
+import com.ceiba.cita.servicio.ServicioEliminarCita;
 
 @Configuration
 public class BeanServicioCita {

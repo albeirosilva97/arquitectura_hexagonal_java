@@ -16,7 +16,6 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 
 import com.ceiba.ApplicationMock;
-import com.ceiba.usuario.controlador.ConsultaControladorCita;
 
 @RunWith(SpringRunner.class)
 @ContextConfiguration(classes= ApplicationMock.class)

@@ -1,14 +1,14 @@
-package com.ceiba.usuario.adaptador.dao;
+package com.ceiba.cita.adaptador.dao;
 
 import java.util.List;
 
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.stereotype.Component;
 
+import com.ceiba.cita.modelo.dto.DtoCita;
+import com.ceiba.cita.puerto.dao.DaoCita;
 import com.ceiba.infraestructura.jdbc.CustomNamedParameterJdbcTemplate;
 import com.ceiba.infraestructura.jdbc.sqlstatement.SqlStatement;
-import com.ceiba.usuario.modelo.dto.DtoCita;
-import com.ceiba.usuario.puerto.dao.DaoCita;
 
 @Component
 public class DaoCitaMysql implements DaoCita {

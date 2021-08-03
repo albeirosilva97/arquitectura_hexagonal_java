@@ -1,13 +1,13 @@
-package com.ceiba.usuario.comando.manejador;
+package com.ceiba.cita.comando.manejador;
 
 import org.springframework.stereotype.Component;
 
 import com.ceiba.ComandoRespuesta;
+import com.ceiba.cita.comando.ComandoCita;
+import com.ceiba.cita.comando.fabrica.FabricaCita;
+import com.ceiba.cita.modelo.entidad.Cita;
+import com.ceiba.cita.servicio.ServicioCrearCita;
 import com.ceiba.manejador.ManejadorComandoRespuesta;
-import com.ceiba.usuario.comando.ComandoCita;
-import com.ceiba.usuario.comando.fabrica.FabricaCita;
-import com.ceiba.usuario.modelo.entidad.Cita;
-import com.ceiba.usuario.servicio.ServicioCrearCita;
 
 @Component
 public class ManejadorCrearCita implements ManejadorComandoRespuesta<ComandoCita, ComandoRespuesta<Long>>{

@@ -1,4 +1,4 @@
-package com.ceiba.usuario.modelo.entidad;
+package com.ceiba.cita.modelo.entidad;
 
 import static com.ceiba.dominio.ValidadorArgumento.validarObligatorio;
 

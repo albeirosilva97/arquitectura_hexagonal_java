@@ -1,17 +1,13 @@
-package com.ceiba.usuario.comando;
+package com.ceiba.cita.modelo.dto;
 
 import java.time.LocalDateTime;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 @Getter
-@Setter
 @AllArgsConstructor
-@NoArgsConstructor
-public class ComandoCita {
+public class DtoCita {
 
 	private Long id;
 	private String nombre;

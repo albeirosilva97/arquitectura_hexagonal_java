@@ -1,9 +1,9 @@
-package com.ceiba.usuario.comando.manejador;
+package com.ceiba.cita.comando.manejador;
 
 import org.springframework.stereotype.Component;
 
+import com.ceiba.cita.servicio.ServicioEliminarCita;
 import com.ceiba.manejador.ManejadorComando;
-import com.ceiba.usuario.servicio.ServicioEliminarCita;
 
 @Component
 public class ManejadorEliminarCita implements ManejadorComando<Long> {

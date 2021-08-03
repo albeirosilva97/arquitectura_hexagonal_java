@@ -1,4 +1,4 @@
-package com.ceiba.usuario.controlador;
+package com.ceiba.cita.controlador;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -9,9 +9,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ceiba.ComandoRespuesta;
-import com.ceiba.usuario.comando.ComandoCita;
-import com.ceiba.usuario.comando.manejador.ManejadorCrearCita;
-import com.ceiba.usuario.comando.manejador.ManejadorEliminarCita;
+import com.ceiba.cita.comando.ComandoCita;
+import com.ceiba.cita.comando.manejador.ManejadorCrearCita;
+import com.ceiba.cita.comando.manejador.ManejadorEliminarCita;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;

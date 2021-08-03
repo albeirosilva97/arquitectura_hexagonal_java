@@ -1,4 +1,4 @@
-package com.ceiba.usuario.adaptador.dao;
+package com.ceiba.cita.adaptador.dao;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -6,8 +6,8 @@ import java.time.LocalDateTime;
 
 import org.springframework.jdbc.core.RowMapper;
 
+import com.ceiba.cita.modelo.dto.DtoCita;
 import com.ceiba.infraestructura.jdbc.MapperResult;
-import com.ceiba.usuario.modelo.dto.DtoCita;
 
 public class MapeoCita implements RowMapper<DtoCita>, MapperResult{
 

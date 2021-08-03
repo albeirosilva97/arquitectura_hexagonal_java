@@ -9,15 +9,14 @@ import org.junit.Test;
 import org.mockito.Mockito;
 
 import com.ceiba.BasePrueba;
+import com.ceiba.cita.modelo.dto.DtoCita;
+import com.ceiba.cita.modelo.entidad.Cita;
+import com.ceiba.cita.puerto.dao.DaoCita;
+import com.ceiba.cita.puerto.repositorio.RepositorioCita;
 import com.ceiba.cita.servicio.testdatabuilder.CitaTestDataBuilder;
 import com.ceiba.dominio.excepcion.ExcepcionCitaDiaNoHabil;
 import com.ceiba.dominio.excepcion.ExcepcionFechaCitaMenorFechaActual;
 import com.ceiba.dominio.excepcion.ExcepcionPersonaConDosCitas;
-import com.ceiba.usuario.modelo.dto.DtoCita;
-import com.ceiba.usuario.modelo.entidad.Cita;
-import com.ceiba.usuario.puerto.dao.DaoCita;
-import com.ceiba.usuario.puerto.repositorio.RepositorioCita;
-import com.ceiba.usuario.servicio.ServicioCrearCita;
 
 
 public class ServicoCrearCitaTest {

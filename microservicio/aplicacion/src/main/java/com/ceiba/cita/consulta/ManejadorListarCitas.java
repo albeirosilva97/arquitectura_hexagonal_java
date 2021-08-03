@@ -1,11 +1,11 @@
-package com.ceiba.usuario.consulta;
+package com.ceiba.cita.consulta;
 
 import java.util.List;
 
 import org.springframework.stereotype.Component;
 
-import com.ceiba.usuario.modelo.dto.DtoCita;
-import com.ceiba.usuario.puerto.dao.DaoCita;
+import com.ceiba.cita.modelo.dto.DtoCita;
+import com.ceiba.cita.puerto.dao.DaoCita;
 
 @Component
 public class ManejadorListarCitas {

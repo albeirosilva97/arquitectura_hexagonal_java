@@ -1,6 +1,6 @@
-package com.ceiba.usuario.servicio;
+package com.ceiba.cita.servicio;
 
-import com.ceiba.usuario.puerto.repositorio.RepositorioCita;
+import com.ceiba.cita.puerto.repositorio.RepositorioCita;
 
 public class ServicioEliminarCita {
 

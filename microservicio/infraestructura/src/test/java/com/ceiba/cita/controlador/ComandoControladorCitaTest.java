@@ -15,10 +15,9 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 
 import com.ceiba.ApplicationMock;
+import com.ceiba.cita.comando.ComandoCita;
+import com.ceiba.cita.modelo.entidad.Cita;
 import com.ceiba.cita.servicio.testdatabuilder.ComandoCitaTestDataBuilder;
-import com.ceiba.usuario.comando.ComandoCita;
-import com.ceiba.usuario.controlador.ComandoControladorCita;
-import com.ceiba.usuario.modelo.entidad.Cita;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 @RunWith(SpringRunner.class)
