@@ -113,13 +113,4 @@ public class ServicioCrearCita {
 		}
 		return diffDays;
 	}
-
-	private LocalDateTime obtenerFechaNoHabil(int numeroDias) {
-		Calendar fechaCalendar = GregorianCalendar.from(ZonedDateTime.of(LocalDateTime.now(), ZoneId.systemDefault()));
-		fechaCalendar.add(Calendar.DATE, numeroDias);
-		while(fechaCalendar.get(Calendar.DAY_OF_WEEK) == 7 || fechaCalendar.get(Calendar.DAY_OF_WEEK) == 1) {
-			fechaCalendar.add(Calendar.DATE, 1);
-		}
-		return LocalDateTime.ofInstant(fechaCalendar.toInstant(), ZoneId.systemDefault());
-	}
 }
