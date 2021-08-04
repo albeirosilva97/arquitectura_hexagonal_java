@@ -1,7 +1,11 @@
 package com.ceiba.cita.servicio;
 
 import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
 import java.util.List;
 
 import org.junit.Assert;
@@ -25,7 +29,7 @@ public class ServicoCrearCitaTest {
     public void validarFechaCitaParaTipoServicioDosEnDiaNoHabilTest() {
         // arrange
 		int tipoServicio = 2;
-        LocalDateTime fechaCita=LocalDateTime.parse("2021-08-22T11:25");
+        LocalDateTime fechaCita = obtenerFechaNoHabil(7);
         Cita cita = new CitaTestDataBuilder().conTipoServicioYfechaCita(tipoServicio, fechaCita).build();
         RepositorioCita repositorioCita = Mockito.mock(RepositorioCita.class);
         DaoCita daoCita = Mockito.mock(DaoCita.class);
@@ -39,7 +43,7 @@ public class ServicoCrearCitaTest {
     public void validarFechaCitaParaTipoServicioTresEnDiaNoHabilTest() {
         // arrange
 		int tipoServicio = 3;
-        LocalDateTime fechaCita=LocalDateTime.parse("2021-08-22T11:25");
+        LocalDateTime fechaCita = obtenerFechaNoHabil(7);
         Cita cita = new CitaTestDataBuilder().conTipoServicioYfechaCita(tipoServicio, fechaCita).build();
         RepositorioCita repositorioCita = Mockito.mock(RepositorioCita.class);
         DaoCita daoCita = Mockito.mock(DaoCita.class);
@@ -65,8 +69,8 @@ public class ServicoCrearCitaTest {
 	@Test
     public void validarExistenciaPreviaDeUnaCitaParaUnaPersonaEnUnaMismaSemanaTest() {
         // arrange
-		LocalDateTime fechaCita=LocalDateTime.parse("2021-08-24T11:25");
-		LocalDateTime fechaCitaIngresada=LocalDateTime.parse("2021-08-26T11:25");
+		LocalDateTime fechaCita = obtenerFechaHabilConDiasDeAnticipacion(10L);
+		LocalDateTime fechaCitaIngresada = obtenerFechaHabilConDiasDeAnticipacion(10L);
 		Cita cita = new CitaTestDataBuilder().conFechaCita(fechaCita).build();
 		DtoCita citaIngresada = new CitaTestDataBuilder().conFechaCitaEIdPersona(fechaCitaIngresada, 1L).buildDtoCita();
 		List<DtoCita>citas = new ArrayList<>();
@@ -80,10 +84,10 @@ public class ServicoCrearCitaTest {
     }
 
 	@Test
-    public void validarCostoServicioUnoTest() {
+    public void validarCostoBaseServicioUnoTest() {
         // arrange
 		int tipoServicio = 1;
-        LocalDateTime fechaCita=LocalDateTime.parse("2021-08-24T11:25");
+        LocalDateTime fechaCita = obtenerFechaHabilConDiasDeAnticipacion(7L);
         Cita cita = new CitaTestDataBuilder().conTipoServicioYfechaCita(tipoServicio, fechaCita).build();
         RepositorioCita repositorioCita = Mockito.mock(RepositorioCita.class);
         DaoCita daoCita = Mockito.mock(DaoCita.class);
@@ -95,10 +99,10 @@ public class ServicoCrearCitaTest {
     }
 
 	@Test
-    public void validarCostoServicioDosTest() {
+    public void validarCostoBaseServicioDosTest() {
         // arrange
 		int tipoServicio = 2;
-        LocalDateTime fechaCita=LocalDateTime.parse("2021-08-24T11:25");
+        LocalDateTime fechaCita = obtenerFechaHabilConDiasDeAnticipacion(7L);
         Cita cita = new CitaTestDataBuilder().conTipoServicioYfechaCita(tipoServicio, fechaCita).build();
         RepositorioCita repositorioCita = Mockito.mock(RepositorioCita.class);
         DaoCita daoCita = Mockito.mock(DaoCita.class);
@@ -110,10 +114,10 @@ public class ServicoCrearCitaTest {
     }
 
 	@Test
-    public void validarCostoServicioTresTest() {
+    public void validarCostoBaseServicioTresTest() {
         // arrange
 		int tipoServicio = 3;
-        LocalDateTime fechaCita=LocalDateTime.parse("2021-08-24T11:25");
+        LocalDateTime fechaCita = obtenerFechaHabilConDiasDeAnticipacion(7L); 
         Cita cita = new CitaTestDataBuilder().conTipoServicioYfechaCita(tipoServicio, fechaCita).build();
         RepositorioCita repositorioCita = Mockito.mock(RepositorioCita.class);
         DaoCita daoCita = Mockito.mock(DaoCita.class);
@@ -128,7 +132,7 @@ public class ServicoCrearCitaTest {
     public void validarCostoServicioUnoConCitaDeMasDeTreintaDiasDeReservaTest() {
         // arrange
 		int tipoServicio = 1;
-        LocalDateTime fechaCita=LocalDateTime.parse("2021-09-21T11:25");
+        LocalDateTime fechaCita = obtenerFechaHabilConDiasDeAnticipacion(50L);
         Cita cita = new CitaTestDataBuilder().conTipoServicioYfechaCita(tipoServicio, fechaCita).build();
         RepositorioCita repositorioCita = Mockito.mock(RepositorioCita.class);
         DaoCita daoCita = Mockito.mock(DaoCita.class);
@@ -143,7 +147,7 @@ public class ServicoCrearCitaTest {
     public void validarCostoServicioUnoConCitaDeMasDeTreintaDiasDeReservaYFinDeSemanaTest() {
         // arrange
 		int tipoServicio = 1;
-        LocalDateTime fechaCita=LocalDateTime.parse("2021-09-25T11:25");
+        LocalDateTime fechaCita = obtenerFechaNoHabil(50);
         Cita cita = new CitaTestDataBuilder().conTipoServicioYfechaCita(tipoServicio, fechaCita).build();
         RepositorioCita repositorioCita = Mockito.mock(RepositorioCita.class);
         DaoCita daoCita = Mockito.mock(DaoCita.class);
@@ -158,7 +162,7 @@ public class ServicoCrearCitaTest {
 	public void validarCostoServicioDosConCitaDeMasDeTreintaDiasDeReservaTest() {
         // arrange
 		int tipoServicio = 2;
-        LocalDateTime fechaCita=LocalDateTime.parse("2021-09-21T11:25");
+        LocalDateTime fechaCita = obtenerFechaHabilConDiasDeAnticipacion(50L);
         Cita cita = new CitaTestDataBuilder().conTipoServicioYfechaCita(tipoServicio, fechaCita).build();
         RepositorioCita repositorioCita = Mockito.mock(RepositorioCita.class);
         DaoCita daoCita = Mockito.mock(DaoCita.class);
@@ -173,7 +177,7 @@ public class ServicoCrearCitaTest {
 	public void validarCostoServicioTresConCitaDeMasDeTreintaDiasDeReservaTest() {
         // arrange
 		int tipoServicio = 3;
-        LocalDateTime fechaCita=LocalDateTime.parse("2021-09-21T11:25");
+        LocalDateTime fechaCita = obtenerFechaHabilConDiasDeAnticipacion(50L);
         Cita cita = new CitaTestDataBuilder().conTipoServicioYfechaCita(tipoServicio, fechaCita).build();
         RepositorioCita repositorioCita = Mockito.mock(RepositorioCita.class);
         DaoCita daoCita = Mockito.mock(DaoCita.class);
@@ -183,4 +187,26 @@ public class ServicoCrearCitaTest {
         // act - assert
         Assert.assertEquals(cita.getCostoServicio(), Integer.valueOf(12000));
     }
+
+	private LocalDateTime obtenerFechaHabilConDiasDeAnticipacion(Long numeroDias) {
+		LocalDateTime fecha = LocalDateTime.now().plusDays(numeroDias);
+		if (validarSiesSabadoOEsDomingo(fecha)) {
+			fecha = fecha.plusDays(3);
+		}
+		return fecha;
+	}
+
+	private LocalDateTime obtenerFechaNoHabil(int numeroDias) {
+		Calendar fechaCalendar = GregorianCalendar.from(ZonedDateTime.of(LocalDateTime.now(), ZoneId.systemDefault()));
+		fechaCalendar.add(Calendar.DATE, numeroDias);
+		while(fechaCalendar.get(Calendar.DAY_OF_WEEK) != 7 && fechaCalendar.get(Calendar.DAY_OF_WEEK) != 1) {
+			fechaCalendar.add(Calendar.DATE, 1);
+		}
+		return LocalDateTime.ofInstant(fechaCalendar.toInstant(), ZoneId.systemDefault());
+	}
+
+	private boolean validarSiesSabadoOEsDomingo(LocalDateTime fechaActual) {
+		Calendar fechaCita = GregorianCalendar.from(ZonedDateTime.of(fechaActual, ZoneId.systemDefault()));
+		return fechaCita.get(Calendar.DAY_OF_WEEK) == 7 || fechaCita.get(Calendar.DAY_OF_WEEK) == 1 ? Boolean.TRUE : Boolean.FALSE;
+	}
 }

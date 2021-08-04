@@ -46,7 +46,7 @@ public class ServicioCrearCita {
 		List<DtoCita> citas = this.daoCita.buscarCitaPorIdPersona(cita.getIdPersona());
 		Calendar fechaCitaNueva = GregorianCalendar.from(ZonedDateTime.of(cita.getFechaCita(), ZoneId.systemDefault()));
 		if (!citas.isEmpty()) {
-			citas.stream().forEach((p) -> {
+			citas.stream().forEach(p -> {
 				Calendar fechaCita = GregorianCalendar.from(ZonedDateTime.of(p.getFechaCita(), ZoneId.systemDefault()));
 				if (fechaCitaNueva.get(Calendar.YEAR) == fechaCita.get(Calendar.YEAR)
 						&& fechaCitaNueva.get(Calendar.WEEK_OF_YEAR) == fechaCita.get(Calendar.WEEK_OF_YEAR)) {
@@ -59,26 +59,28 @@ public class ServicioCrearCita {
 	private void fijarCosto(Cita cita) {
 		int dias = contarDiasHabilesEntreDosFechas(cita);
 		if (cita.getTipoServicio() == 1) {
-			cita.setCostoServicio(dias < 30 ? COSTO_SERVICIO_1 + aniadirExecenteCitaFinDeSemana(cita)
-					: COSTO_SERVICIO_1 + EXECENTE_CITAS_30_DIAS_ANTICIPACION + aniadirExecenteCitaFinDeSemana(cita));
+			cita.setCostoServicio(dias <= 30 ? (COSTO_SERVICIO_1 + aniadirExecenteCitaFinDeSemana(cita))
+					: (COSTO_SERVICIO_1 + EXECENTE_CITAS_30_DIAS_ANTICIPACION + aniadirExecenteCitaFinDeSemana(cita)));
 		}
 		if (cita.getTipoServicio() == 2) {
 			cita.setCostoServicio(
-					dias < 30 ? COSTO_SERVICIO_2 : COSTO_SERVICIO_2 + EXECENTE_CITAS_30_DIAS_ANTICIPACION);
+					dias <= 30 ? COSTO_SERVICIO_2 : (COSTO_SERVICIO_2 + EXECENTE_CITAS_30_DIAS_ANTICIPACION));
 		}
 		if (cita.getTipoServicio() == 3) {
 			cita.setCostoServicio(
-					dias < 30 ? COSTO_SERVICIO_3 : COSTO_SERVICIO_3 + EXECENTE_CITAS_30_DIAS_ANTICIPACION);
+					dias <= 30 ? COSTO_SERVICIO_3 : (COSTO_SERVICIO_3 + EXECENTE_CITAS_30_DIAS_ANTICIPACION));
 		}
 	}
 	
 	private void validarDiaDeCita(Cita cita) {
-		Calendar fechaCita = GregorianCalendar.from(ZonedDateTime.of(cita.getFechaCita(), ZoneId.systemDefault()));
-		if (fechaCita.get(Calendar.DAY_OF_WEEK) == 7 || fechaCita.get(Calendar.DAY_OF_WEEK) == 1) {
-			if (!validarTipoServicio(cita)) {
-				throw new ExcepcionCitaDiaNoHabil(DIA_NO_HABIL_PARA_SERVICIO);
-			}
+		if (validarSiesSabadoOEsDomingo(cita) && !validarTipoServicio(cita)) {
+			throw new ExcepcionCitaDiaNoHabil(DIA_NO_HABIL_PARA_SERVICIO);
 		}
+	}
+
+	private boolean validarSiesSabadoOEsDomingo(Cita cita) {
+		Calendar fechaCita = GregorianCalendar.from(ZonedDateTime.of(cita.getFechaCita(), ZoneId.systemDefault()));
+		return fechaCita.get(Calendar.DAY_OF_WEEK) == 7 || fechaCita.get(Calendar.DAY_OF_WEEK) == 1 ? Boolean.TRUE : Boolean.FALSE;
 	}
 
 	private boolean validarTipoServicio(Cita cita) {
@@ -90,10 +92,7 @@ public class ServicioCrearCita {
 	}
 
 	private int aniadirExecenteCitaFinDeSemana(Cita cita) {
-		Calendar fechaCita = GregorianCalendar.from(ZonedDateTime.of(cita.getFechaCita(), ZoneId.systemDefault()));
-		return fechaCita.get(Calendar.DAY_OF_WEEK) == 7 || fechaCita.get(Calendar.DAY_OF_WEEK) == 1
-				? EXECENTE_FINES_DE_SEMANA
-				: 0;
+		return validarSiesSabadoOEsDomingo(cita) ? EXECENTE_FINES_DE_SEMANA : 0;
 	}
 
 	private void validarFechaCitaMayorAfechaDelSistema(Cita cita) {
@@ -101,21 +100,26 @@ public class ServicioCrearCita {
 			throw new ExcepcionFechaCitaMenorFechaActual(FECHA_CITA_MENOR_A_FECHA_ACTUAL);
 		}
 	}
+
 	private int contarDiasHabilesEntreDosFechas(Cita cita) {
-		int diffDays= 0;
+		int diffDays = 0;
 		Calendar fechaInicial = Calendar.getInstance();
 		Calendar fechaFinal = GregorianCalendar.from(ZonedDateTime.of(cita.getFechaCita(), ZoneId.systemDefault()));
-		  //mientras la fecha inicial sea menor o igual que la fecha final se cuentan los dias
-		  while (fechaInicial.before(fechaFinal) || fechaInicial.equals(fechaFinal)) {
+		while (fechaInicial.before(fechaFinal) || fechaInicial.equals(fechaFinal)) {
+			if (fechaInicial.get(Calendar.DAY_OF_WEEK) != 1 && fechaInicial.get(Calendar.DAY_OF_WEEK) != 7) {
+				diffDays++;
+			}
+			fechaInicial.add(Calendar.DATE, 1);
+		}
+		return diffDays;
+	}
 
-		  //si el dia de la semana de la fecha minima es diferente de sabado o domingo
-		  if (fechaInicial.get(Calendar.DAY_OF_WEEK) != 1 && fechaInicial.get(Calendar.DAY_OF_WEEK) != 7) {
-		   //se aumentan los d�as de diferencia entre min y max
-		   diffDays++;
-		   }
-		  //se suma 1 dia para hacer la validaci�n del siguiente dia.
-		  fechaInicial.add(Calendar.DATE, 1);
-		  }
-		return diffDays+1;
+	private LocalDateTime obtenerFechaNoHabil(int numeroDias) {
+		Calendar fechaCalendar = GregorianCalendar.from(ZonedDateTime.of(LocalDateTime.now(), ZoneId.systemDefault()));
+		fechaCalendar.add(Calendar.DATE, numeroDias);
+		while(fechaCalendar.get(Calendar.DAY_OF_WEEK) == 7 || fechaCalendar.get(Calendar.DAY_OF_WEEK) == 1) {
+			fechaCalendar.add(Calendar.DATE, 1);
+		}
+		return LocalDateTime.ofInstant(fechaCalendar.toInstant(), ZoneId.systemDefault());
 	}
 }
