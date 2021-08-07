@@ -6,7 +6,9 @@ import static com.ceiba.cita.util.ConstantesCita.COSTO_SERVICIO_3;
 import static com.ceiba.cita.util.ConstantesCita.DIA_NO_HABIL_PARA_SERVICIO;
 import static com.ceiba.cita.util.ConstantesCita.EXECENTE_CITAS_30_DIAS_ANTICIPACION;
 import static com.ceiba.cita.util.ConstantesCita.EXECENTE_FINES_DE_SEMANA;
+import static com.ceiba.cita.util.ConstantesCita.FECHA_CITA_MENOR_A_FECHA_ACTUAL;
 
+import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.util.Calendar;
@@ -15,6 +17,7 @@ import java.util.GregorianCalendar;
 import com.ceiba.cita.modelo.entidad.Cita;
 import com.ceiba.cita.puerto.repositorio.RepositorioCita;
 import com.ceiba.dominio.excepcion.ExcepcionCitaDiaNoHabil;
+import com.ceiba.dominio.excepcion.ExcepcionFechaCitaMenorFechaActual;
 
 public class ServicioActualizarCita {
 
@@ -25,6 +28,7 @@ public class ServicioActualizarCita {
 	}
 
 	public void ejecutar(Cita cita) {
+		validarFechaCitaMayorAfechaDelSistemaActualizar(cita);
 		fijarCostoActualizar(cita);
 		validarDiaDeCitaActualizar(cita);
         this.repositorioCita.actualizar(cita);
@@ -63,6 +67,12 @@ public class ServicioActualizarCita {
 			bandera = true;
 		}
 		return bandera;
+	}
+
+	private void validarFechaCitaMayorAfechaDelSistemaActualizar(Cita cita) {
+		if (cita.getFechaCita().isBefore(LocalDateTime.now())) {
+			throw new ExcepcionFechaCitaMenorFechaActual(FECHA_CITA_MENOR_A_FECHA_ACTUAL);
+		}
 	}
 
 	private int contarDiasHabilesEntreDosFechasActualizar(Cita cita) {

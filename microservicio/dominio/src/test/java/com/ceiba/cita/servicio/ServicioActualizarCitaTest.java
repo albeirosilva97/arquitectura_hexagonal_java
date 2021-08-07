@@ -3,24 +3,19 @@ package com.ceiba.cita.servicio;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
-import java.util.List;
 
 import org.junit.Assert;
 import org.junit.Test;
 import org.mockito.Mockito;
 
 import com.ceiba.BasePrueba;
-import com.ceiba.cita.modelo.dto.DtoCita;
 import com.ceiba.cita.modelo.entidad.Cita;
-import com.ceiba.cita.puerto.dao.DaoCita;
 import com.ceiba.cita.puerto.repositorio.RepositorioCita;
 import com.ceiba.cita.servicio.testdatabuilder.CitaTestDataBuilder;
 import com.ceiba.dominio.excepcion.ExcepcionCitaDiaNoHabil;
 import com.ceiba.dominio.excepcion.ExcepcionFechaCitaMenorFechaActual;
-import com.ceiba.dominio.excepcion.ExcepcionPersonaConDosCitas;
 
 public class ServicioActualizarCitaTest {
 
@@ -31,11 +26,10 @@ public class ServicioActualizarCitaTest {
         LocalDateTime fechaCita = obtenerFechaNoHabil(7);
         Cita cita = new CitaTestDataBuilder().conTipoServicioYfechaCita(tipoServicio, fechaCita).build();
         RepositorioCita repositorioCita = Mockito.mock(RepositorioCita.class);
-        DaoCita daoCita = Mockito.mock(DaoCita.class);
         //Mockito.when(repositorioUsuario.existe(Mockito.anyString())).thenReturn(true);
-        ServicioCrearCita servicioCrearCita = new ServicioCrearCita(repositorioCita, daoCita);
+        ServicioActualizarCita servicioActualizarCita = new ServicioActualizarCita(repositorioCita);
         // act - assert
-        BasePrueba.assertThrows(() -> servicioCrearCita.ejecutar(cita), ExcepcionCitaDiaNoHabil.class,"Dia no habil para este servicio");
+        BasePrueba.assertThrows(() -> servicioActualizarCita.ejecutar(cita), ExcepcionCitaDiaNoHabil.class,"Dia no habil para este servicio");
     }
 
 	@Test
@@ -45,11 +39,10 @@ public class ServicioActualizarCitaTest {
         LocalDateTime fechaCita = obtenerFechaNoHabil(7);
         Cita cita = new CitaTestDataBuilder().conTipoServicioYfechaCita(tipoServicio, fechaCita).build();
         RepositorioCita repositorioCita = Mockito.mock(RepositorioCita.class);
-        DaoCita daoCita = Mockito.mock(DaoCita.class);
         //Mockito.when(repositorioUsuario.existe(Mockito.anyString())).thenReturn(true);
-        ServicioCrearCita servicioCrearCita = new ServicioCrearCita(repositorioCita, daoCita);
+        ServicioActualizarCita servicioActualizarCita = new ServicioActualizarCita(repositorioCita);
         // act - assert
-        BasePrueba.assertThrows(() -> servicioCrearCita.ejecutar(cita), ExcepcionCitaDiaNoHabil.class,"Dia no habil para este servicio");
+        BasePrueba.assertThrows(() -> servicioActualizarCita.ejecutar(cita), ExcepcionCitaDiaNoHabil.class,"Dia no habil para este servicio");
     }
 
 	@Test
@@ -58,11 +51,10 @@ public class ServicioActualizarCitaTest {
         LocalDateTime fechaCita=LocalDateTime.parse("2018-08-22T11:25");
         Cita cita = new CitaTestDataBuilder().conFechaCita(fechaCita).build();
         RepositorioCita repositorioCita = Mockito.mock(RepositorioCita.class);
-        DaoCita daoCita = Mockito.mock(DaoCita.class);
         //Mockito.when(repositorioUsuario.existe(Mockito.anyString())).thenReturn(true);
-        ServicioCrearCita servicioCrearCita = new ServicioCrearCita(repositorioCita, daoCita);
+        ServicioActualizarCita servicioActualizarCita = new ServicioActualizarCita(repositorioCita);
         // act - assert
-        BasePrueba.assertThrows(() -> servicioCrearCita.ejecutar(cita), ExcepcionFechaCitaMenorFechaActual.class,"La fecha de la cita es menor a la fecha actual");
+        BasePrueba.assertThrows(() -> servicioActualizarCita.ejecutar(cita), ExcepcionFechaCitaMenorFechaActual.class,"La fecha de la cita es menor a la fecha actual");
     }
 
 	@Test
@@ -72,10 +64,9 @@ public class ServicioActualizarCitaTest {
         LocalDateTime fechaCita = obtenerFechaHabilConDiasDeAnticipacion(7L);
         Cita cita = new CitaTestDataBuilder().conTipoServicioYfechaCita(tipoServicio, fechaCita).build();
         RepositorioCita repositorioCita = Mockito.mock(RepositorioCita.class);
-        DaoCita daoCita = Mockito.mock(DaoCita.class);
-        ServicioCrearCita servicioCrearCita = new ServicioCrearCita(repositorioCita, daoCita);
+        ServicioActualizarCita servicioActualizarCita = new ServicioActualizarCita(repositorioCita);
         //when
-        servicioCrearCita.ejecutar(cita);
+        servicioActualizarCita.ejecutar(cita);
         // act - assert
         Assert.assertEquals(cita.getCostoServicio(), Integer.valueOf(5000));
     }
@@ -87,10 +78,9 @@ public class ServicioActualizarCitaTest {
         LocalDateTime fechaCita = obtenerFechaHabilConDiasDeAnticipacion(7L);
         Cita cita = new CitaTestDataBuilder().conTipoServicioYfechaCita(tipoServicio, fechaCita).build();
         RepositorioCita repositorioCita = Mockito.mock(RepositorioCita.class);
-        DaoCita daoCita = Mockito.mock(DaoCita.class);
-        ServicioCrearCita servicioCrearCita = new ServicioCrearCita(repositorioCita, daoCita);
+        ServicioActualizarCita servicioActualizarCita = new ServicioActualizarCita(repositorioCita);
         //when
-        servicioCrearCita.ejecutar(cita);
+        servicioActualizarCita.ejecutar(cita);
         // act - assert
         Assert.assertEquals(cita.getCostoServicio(), Integer.valueOf(6000));
     }
@@ -102,10 +92,9 @@ public class ServicioActualizarCitaTest {
         LocalDateTime fechaCita = obtenerFechaHabilConDiasDeAnticipacion(7L); 
         Cita cita = new CitaTestDataBuilder().conTipoServicioYfechaCita(tipoServicio, fechaCita).build();
         RepositorioCita repositorioCita = Mockito.mock(RepositorioCita.class);
-        DaoCita daoCita = Mockito.mock(DaoCita.class);
-        ServicioCrearCita servicioCrearCita = new ServicioCrearCita(repositorioCita, daoCita);
+        ServicioActualizarCita servicioActualizarCita = new ServicioActualizarCita(repositorioCita);
         //when
-        servicioCrearCita.ejecutar(cita);
+        servicioActualizarCita.ejecutar(cita);
         // act - assert
         Assert.assertEquals(cita.getCostoServicio(), Integer.valueOf(10000));
     }
@@ -117,10 +106,9 @@ public class ServicioActualizarCitaTest {
         LocalDateTime fechaCita = obtenerFechaHabilConDiasDeAnticipacion(50L);
         Cita cita = new CitaTestDataBuilder().conTipoServicioYfechaCita(tipoServicio, fechaCita).build();
         RepositorioCita repositorioCita = Mockito.mock(RepositorioCita.class);
-        DaoCita daoCita = Mockito.mock(DaoCita.class);
-        ServicioCrearCita servicioCrearCita = new ServicioCrearCita(repositorioCita, daoCita);
+        ServicioActualizarCita servicioActualizarCita = new ServicioActualizarCita(repositorioCita);
         //when
-        servicioCrearCita.ejecutar(cita);
+        servicioActualizarCita.ejecutar(cita);
         // act - assert
         Assert.assertEquals(cita.getCostoServicio(), Integer.valueOf(7000));
     }
@@ -132,10 +120,9 @@ public class ServicioActualizarCitaTest {
         LocalDateTime fechaCita = obtenerFechaNoHabil(50);
         Cita cita = new CitaTestDataBuilder().conTipoServicioYfechaCita(tipoServicio, fechaCita).build();
         RepositorioCita repositorioCita = Mockito.mock(RepositorioCita.class);
-        DaoCita daoCita = Mockito.mock(DaoCita.class);
-        ServicioCrearCita servicioCrearCita = new ServicioCrearCita(repositorioCita, daoCita);
+        ServicioActualizarCita servicioActualizarCita = new ServicioActualizarCita(repositorioCita);
         //when
-        servicioCrearCita.ejecutar(cita);
+        servicioActualizarCita.ejecutar(cita);
         // act - assert
         Assert.assertEquals(cita.getCostoServicio(), Integer.valueOf(10000));
     }
@@ -147,10 +134,9 @@ public class ServicioActualizarCitaTest {
         LocalDateTime fechaCita = obtenerFechaHabilConDiasDeAnticipacion(50L);
         Cita cita = new CitaTestDataBuilder().conTipoServicioYfechaCita(tipoServicio, fechaCita).build();
         RepositorioCita repositorioCita = Mockito.mock(RepositorioCita.class);
-        DaoCita daoCita = Mockito.mock(DaoCita.class);
-        ServicioCrearCita servicioCrearCita = new ServicioCrearCita(repositorioCita, daoCita);
+        ServicioActualizarCita servicioActualizarCita = new ServicioActualizarCita(repositorioCita);
         //when
-        servicioCrearCita.ejecutar(cita);
+        servicioActualizarCita.ejecutar(cita);
         // act - assert
         Assert.assertEquals(cita.getCostoServicio(), Integer.valueOf(8000));
     }
@@ -162,10 +148,9 @@ public class ServicioActualizarCitaTest {
         LocalDateTime fechaCita = obtenerFechaHabilConDiasDeAnticipacion(50L);
         Cita cita = new CitaTestDataBuilder().conTipoServicioYfechaCita(tipoServicio, fechaCita).build();
         RepositorioCita repositorioCita = Mockito.mock(RepositorioCita.class);
-        DaoCita daoCita = Mockito.mock(DaoCita.class);
-        ServicioCrearCita servicioCrearCita = new ServicioCrearCita(repositorioCita, daoCita);
+        ServicioActualizarCita servicioActualizarCita = new ServicioActualizarCita(repositorioCita);
         //when
-        servicioCrearCita.ejecutar(cita);
+        servicioActualizarCita.ejecutar(cita);
         // act - assert
         Assert.assertEquals(cita.getCostoServicio(), Integer.valueOf(12000));
     }
