@@ -2,6 +2,7 @@ package com.ceiba.cita.controlador;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -16,7 +17,6 @@ import org.springframework.test.web.servlet.MockMvc;
 
 import com.ceiba.ApplicationMock;
 import com.ceiba.cita.comando.ComandoCita;
-import com.ceiba.cita.modelo.entidad.Cita;
 import com.ceiba.cita.servicio.testdatabuilder.ComandoCitaTestDataBuilder;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -53,6 +53,19 @@ public class ComandoControladorCitaTest {
         mocMvc.perform(delete("/citas/{id}",id)
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk());
+    }
+
+    @Test
+    public void actualizar() throws Exception{
+        // arrange
+        Long id = 2L;
+        ComandoCita cita = new ComandoCitaTestDataBuilder().build();
+
+        // act - assert
+        mocMvc.perform(put("/citas/{id}",id)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(cita)))
                 .andExpect(status().isOk());
     }
 }
